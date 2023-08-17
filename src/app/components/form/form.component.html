@@ -1,49 +1,79 @@
 <main class="main-container">
   <section class="img-left">
-    <img [src]="bgLeft" alt="background img" />
     <div class="box-card-front">
       <img class="cardLogo" [src]="cardLogo" alt="logo" />
       <div class="box-data">
-        <p>{{ numberCardValue }}</p>
+        <p>{{ dataUser.number }}</p>
         <div class="align-data">
-          <span>{{ nameCardValue }}</span>
-          <span>{{ monthDateCardValue }}/{{ yearDateCardValue }}</span>
+          <span class="spanName">{{ dataUser.name }}</span>
+          <span>{{ dataUser.monthDate }}/{{ dataUser.yearDate }}</span>
         </div>
       </div>
     </div>
     <div class="box-card-back">
-      <p>{{ cvcCardValue }}</p>
+      <p>{{ dataUser.cvc }}</p>
     </div>
   </section>
+  <section></section>
   <section class="form-right">
     <form>
       <div class="box-input">
-        <p>cardholder name</p>
-        <input type="text" placeholder="e.g Jane Appleseed" />
-        <p [ngClass]="msgAlertInput ? 'msg-alert' : ''"></p>
+        <p class="label">cardholder name</p>
+        <input
+          type="text"
+          placeholder="e.g Jane Appleseed"
+          (keyup)="fcDataCard($event, 'name')"
+          maxlength="25"
+        />
+        <p [ngClass]="msgAlertInput ? 'msg-alert' : 'hidden-msg-alert'">
+          {{ msgAlertName }}
+        </p>
       </div>
       <div class="box-input">
-        <p>card number</p>
+        <p class="label">card number</p>
         <input
           type="text"
           placeholder="e.g 123 5678 9123 0000"
-          (keyup)="fcNumberCard($event)"
+          (keyup)="fcDataCard($event, 'number')"
+          maxlength="16"
         />
-        <p [ngClass]="msgAlertInput ? 'msg-alert' : ''"></p>
+        <p [ngClass]="msgAlertInput ? 'msg-alert' : 'hidden-msg-alert'">
+          {{ msgAlertNumber }}
+        </p>
       </div>
       <div class="box-input box-date">
         <div class="left">
-          <p>exp. date (mm/yy)</p>
+          <p class="label">exp. date (mm/yy)</p>
           <div>
-            <input type="text" placeholder="MM" />
-            <input type="text" placeholder="YY" />
+            <input
+              type="number"
+              placeholder="MM"
+              (keyup)="fcDataCard($event, 'month')"
+              maxlength="2"
+            />
+            <input
+              type="number"
+              placeholder="YY"
+              (keyup)="fcDataCard($event, 'year')"
+              maxlength="2"
+            />
           </div>
+          <p [ngClass]="msgAlertInput ? 'msg-alert' : 'hidden-msg-alert'">
+            {{ msgAlertDayYear }}
+          </p>
         </div>
-        <div>
-          <p>cvc</p>
-          <input type="text" placeholder="e.g 123" />
+        <div class="right">
+          <p class="label">cvc</p>
+          <input
+            type="number"
+            placeholder="e.g 123"
+            (keyup)="fcDataCard($event, 'cvc')"
+            maxlength="3"
+          />
+          <p [ngClass]="msgAlertInput ? 'msg-alert' : 'hidden-msg-alert'">
+            {{ msgAlertCvc }}
+          </p>
         </div>
-        <!-- <p [ngClass]="msgAlertInput ? 'msg-alert' : ''"></p> -->
       </div>
       <div class="box-input">
         <input type="button" value="Confirm" />
