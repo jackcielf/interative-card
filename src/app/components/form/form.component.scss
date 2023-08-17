@@ -94,11 +94,8 @@
   text-transform: uppercase;
 }
 
-.box-card-front .box-data input,
-.box-card-back input {
-  background-color: transparent;
-  border: none;
-  outline: none;
+.box-card-front .box-data p,
+.box-card-back p {
   font-size: 2em;
   color: var(--white);
   letter-spacing: 0.05cm;
@@ -121,7 +118,7 @@
   right: 150px;
 }
 
-.box-card-back input {
+.box-card-back p {
   font-size: 1em;
   position: absolute;
   top: 43.5%;

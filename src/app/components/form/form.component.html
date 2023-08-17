@@ -3,17 +3,16 @@
     <img [src]="bgLeft" alt="background img" />
     <div class="box-card-front">
       <img class="cardLogo" [src]="cardLogo" alt="logo" />
-      <!-- <img [src]="cardFront" alt="front card" /> -->
       <div class="box-data">
-        <input type="text" [value]="numberCard" disabled />
+        <p>{{ numberCardValue }}</p>
         <div class="align-data">
-          <span>{{ nameCard }}</span>
-          <span>{{ monthDateCard }}/{{ yearDateCard }}</span>
+          <span>{{ nameCardValue }}</span>
+          <span>{{ monthDateCardValue }}/{{ yearDateCardValue }}</span>
         </div>
       </div>
     </div>
     <div class="box-card-back">
-      <input type="text" [value]="cvcCard" desabled />
+      <p>{{ cvcCardValue }}</p>
     </div>
   </section>
   <section class="form-right">
@@ -25,7 +24,11 @@
       </div>
       <div class="box-input">
         <p>card number</p>
-        <input type="number" placeholder="e.g 123 5678 9123 0000" />
+        <input
+          type="text"
+          placeholder="e.g 123 5678 9123 0000"
+          (keyup)="fcNumberCard($event)"
+        />
         <p [ngClass]="msgAlertInput ? 'msg-alert' : ''"></p>
       </div>
       <div class="box-input box-date">

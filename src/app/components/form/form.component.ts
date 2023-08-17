@@ -12,11 +12,19 @@ export class FormComponent implements OnInit {
   cardLogo: string = '../../../assets/images/card-logo.svg';
 
   msgAlertInput: boolean;
-  numberCard: string = '9591 6489 6389 101E';
-  nameCard: string = 'felicia leite';
-  monthDateCard: number = 99;
-  yearDateCard: number = 99;
-  cvcCard: number = 999;
+  numberCardValue: string;
+  nameCardValue: string = 'felicia leite';
+  monthDateCardValue: number = 99;
+  yearDateCardValue: number = 99;
+  cvcCardValue: number = 999;
+
+  fcNumberCard(event: any) {
+    this.numberCardValue = (<HTMLInputElement>event.target).value;
+
+    if (!this.numberCardValue) {
+      this.numberCardValue = '0000 0000 0000 000E';
+    }
+  }
 
   constructor() {}
 
