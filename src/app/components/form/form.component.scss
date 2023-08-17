@@ -1,0 +1,129 @@
+.main-container {
+  height: 100%;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+}
+
+.img-left {
+  position: relative;
+}
+
+.form-right {
+  display: flex;
+  align-items: center;
+  //   justify-content: center;
+  position: relative;
+}
+
+.form-right form {
+  width: 500px;
+  height: 400px;
+  margin-left: 30px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.box-input input {
+  width: 100%;
+  padding: 12px;
+  border-radius: 8px;
+  border: 1px solid var(--light);
+  font-size: 18px;
+}
+
+.box-input input::placeholder {
+  color: var(--dark);
+}
+
+.box-input p {
+  text-transform: uppercase;
+  letter-spacing: 0.05cm;
+  margin-bottom: 5px;
+}
+
+.box-date {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 25px;
+}
+
+.box-date .left > div {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.box-input input[type="button"] {
+  background-color: var(--veryDark);
+  border: none;
+  padding: 15px 23px;
+  color: var(--white);
+}
+
+.box-card-front,
+.box-card-back {
+  position: absolute;
+}
+
+.box-card-front {
+  width: 450px;
+  height: 250px;
+  background: url(/assets/images/bg-card-front.png);
+  background-repeat: no-repeat;
+  top: 20%;
+  right: 230px;
+}
+
+.box-card-front .cardLogo {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+}
+
+.box-card-front .box-data {
+  width: 400px;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  position: absolute;
+  bottom: 20px;
+  left: 20px;
+  font-size: 0.9em;
+  text-transform: uppercase;
+}
+
+.box-card-front .box-data input,
+.box-card-back input {
+  background-color: transparent;
+  border: none;
+  outline: none;
+  font-size: 2em;
+  color: var(--white);
+  letter-spacing: 0.05cm;
+}
+
+.box-card-front .box-data .align-data {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  color: var(--white);
+}
+
+.box-card-back {
+  width: 450px;
+  height: 250px;
+  background: url(/assets/images/bg-card-back.png);
+  background-repeat: no-repeat;
+  top: 50%;
+  right: 150px;
+}
+
+.box-card-back input {
+  font-size: 1em;
+  position: absolute;
+  top: 43.5%;
+  right: -160px;
+}

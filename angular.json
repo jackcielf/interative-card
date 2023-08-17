@@ -123,6 +123,10 @@
           }
         }
       }
-    }},
-  "defaultProject": "interative-card"
+    }
+  },
+  "defaultProject": "interative-card",
+  "cli": {
+    "analytics": "9fd28bc2-22ee-49f1-9df5-feb0a5e34251"
+  }
 }
