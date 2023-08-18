@@ -26,7 +26,7 @@
           maxlength="25"
         />
         <p [ngClass]="msgAlertInput ? 'msg-alert' : 'hidden-msg-alert'">
-          {{ msgAlertName }}
+          {{ alert.name }}
         </p>
       </div>
       <div class="box-input">
@@ -38,7 +38,7 @@
           maxlength="16"
         />
         <p [ngClass]="msgAlertInput ? 'msg-alert' : 'hidden-msg-alert'">
-          {{ msgAlertNumber }}
+          {{ alert.number }}
         </p>
       </div>
       <div class="box-input box-date">
@@ -59,7 +59,7 @@
             />
           </div>
           <p [ngClass]="msgAlertInput ? 'msg-alert' : 'hidden-msg-alert'">
-            {{ msgAlertDayYear }}
+            {{ alert.monthYear }}
           </p>
         </div>
         <div class="right">
@@ -71,7 +71,7 @@
             maxlength="3"
           />
           <p [ngClass]="msgAlertInput ? 'msg-alert' : 'hidden-msg-alert'">
-            {{ msgAlertCvc }}
+            {{ alert.cvc }}
           </p>
         </div>
       </div>

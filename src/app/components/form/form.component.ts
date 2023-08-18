@@ -1,4 +1,3 @@
-import { isEmptyExpression } from '@angular/compiler';
 import { Component, OnInit } from '@angular/core';
 
 @Component({
@@ -20,30 +19,65 @@ export class FormComponent implements OnInit {
     cvc: 222,
   };
 
-  alert = {
+  alertMsg = {
     nameInput: 'Please, enter a valid name',
+    nameInputValueInvalid: 'Please, only letters',
     numberInput: 'Wrong format, numbers only',
-    monthYearInput: "Cant't be blank",
-    monthYearInvalid: 'Too many numbers',
-    cvcInput: "Cant't be blank",
+    numberInputInvalid: "Cant't be blank",
+    numberInputValueInvalid: 'Please, only numbers',
+    monthYearInput: 'Too many numbers',
+    monthYearInputInvalid: "Cant't be blank",
+    cvcInput: 'Too many numbers',
+    cvcInputInvalid: "Cant't be blank",
+  };
+
+  alert = {
+    name: '',
+    number: '',
+    monthYear: '',
+    cvc: '',
   };
 
   keyCodeNumber: number;
-  msgAlertInput: boolean;
-  msgAlertName: string;
-  msgAlertNumber: string;
-  msgAlertDayYear: string;
-  msgAlertCvc: string;
+  msgAlertInput: boolean = false;
 
   fcDataCard(event: any, id: string) {
+    this.keyCodeNumber = event.keyCode ? event.keyCode : event.which;
+
     switch (id) {
       case 'name':
         this.dataUser.name = (<HTMLInputElement>event.target).value;
+
+        // Verificando se há somente letras no input
+        if (
+          (this.keyCodeNumber >= 65 && this.keyCodeNumber <= 90) ||
+          this.keyCodeNumber == 186 ||
+          this.keyCodeNumber == 8 ||
+          this.keyCodeNumber == 13
+        ) {
+        } else {
+          this.msgAlertInput = true;
+          this.alert.name = this.alertMsg.nameInputValueInvalid;
+          event.preventDefault();
+        }
         this.inputValidation(this.dataUser.name, 'name');
         break;
 
       case 'number':
         this.dataUser.number = (<HTMLInputElement>event.target).value;
+
+        if (
+          !(
+            Number(this.keyCodeNumber) >= 97 &&
+            Number(this.keyCodeNumber) <= 105
+          ) ||
+          !(
+            Number(this.keyCodeNumber) >= 48 && Number(this.keyCodeNumber) <= 57
+          )
+        ) {
+          this.alert.number = this.alertMsg.numberInputValueInvalid;
+          event.preventDefault();
+        }
         this.inputValidation(this.dataUser.number, 'number');
         break;
       case 'month':
@@ -70,94 +104,54 @@ export class FormComponent implements OnInit {
 
   inputValidation(value: any, id: string) {
     if (id == 'name') {
-      if (value.length > 25) {
+      // Verificando o número de caracteres no input
+      if (value.length > 20) {
         this.msgAlertInput = true;
-        this.msgAlertName = this.alert.nameInput;
-      } else {
-        this.msgAlertInput = true;
+        this.alert.name = this.alertMsg.nameInput;
       }
-
+      // Verificando se o input está vazio
       if (!value.length) {
         this.dataUser.name = 'name';
-        this.msgAlertName = this.alert.nameInput;
+        this.alert.name = this.alertMsg.nameInputValueInvalid;
       }
-    } else if (id == 'number') {
+    }
+
+    if (id == 'number') {
       if (value.length > 16) {
         this.msgAlertInput = true;
-        this.msgAlertName = this.alert.numberInput;
+        this.alert.number = this.alertMsg.numberInput;
       }
       if (!value.length) {
         this.dataUser.number = '0000 0000 0000 0000';
+        this.alert.number = this.alertMsg.numberInputInvalid;
       }
-    } else if (id == 'month') {
+    }
+
+    if (id == 'month' || id == 'year') {
       if (value.length > 2) {
         this.msgAlertInput = true;
-        this.msgAlertDayYear = this.alert.monthYearInvalid;
+        this.alert.monthYear = this.alertMsg.monthYearInputInvalid;
         // A FAZER
-      } else {
-        this.msgAlertInput = true;
       }
       if (!value.length) {
         this.dataUser.monthDate = Number('00');
-        this.msgAlertDayYear = this.alert.monthYearInput;
+        this.alert.monthYear = this.alertMsg.monthYearInput;
       }
-    } else if (id == 'year') {
-      if (value.length > 2) {
-        this.msgAlertInput = true;
-        this.msgAlertDayYear = this.alert.monthYearInput;
-        // A FAZER
-      }
-      if (!value.length) {
-        this.dataUser.yearDate = Number('00');
-      }
-    } else if (id == 'cvc') {
+    }
+
+    if (id == 'cvc') {
       if (value.length > 3) {
         this.msgAlertInput = true;
-        this.msgAlertCvc = this.alert.cvcInput;
+        this.alert.cvc = this.alertMsg.cvcInputInvalid;
         // A FAZER
       }
       if (!value.length) {
         this.dataUser.cvc = Number('000');
+        this.alert.cvc = this.alertMsg.cvcInputInvalid;
       }
     }
   }
 
-  /*
-  msgAlertInput: boolean;
-  numberCardValue: string = ;
-  nameCardValue: string = ;
-  monthDateCardValue: number = 99;
-  yearDateCardValue: number = 99;
-  cvcCardValue: number = 999;
-
-  keyCodeNumber: number;
-
-  fcNumberCard(event: any) {
-    this.dataUser.number = (<HTMLInputElement>event.target).value;
-
-    if (!this.numberCardValue) {
-      this.numberCardValue = '0000 0000 0000 000E';
-    }
-  }
-
-  fcNameCard(event: any) {
-    this.keyCodeNumber = event.keyCode ? event.keyCode : event.which;
-
-    if (
-      (Number(this.keyCodeNumber) >= 97 && Number(this.keyCodeNumber) <= 105) ||
-      (Number(this.keyCodeNumber) >= 48 && Number(this.keyCodeNumber) <= 57)
-    ) {
-      // event.preventDefault();
-      // if (!isNaN(String.fromCharCode(event.keyCode))) return true; else return false;
-    } else {
-      this.nameCardValue = event.target.value;
-
-      if (!this.nameCardValue) {
-        this.nameCardValue = 'nome';
-      }
-    }
-  }
-*/
   constructor() {}
 
   ngOnInit(): void {}
