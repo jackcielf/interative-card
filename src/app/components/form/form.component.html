@@ -14,32 +14,37 @@
       <p>{{ dataUser.cvc }}</p>
     </div>
   </section>
+
   <section></section>
+
   <section class="form-right">
-    <form>
+    <form [formGroup]="form">
       <div class="box-input">
         <p class="label">cardholder name</p>
         <input
           type="text"
           placeholder="e.g Jane Appleseed"
+          formControlName="name"
           (keyup)="fcDataCard($event, 'name')"
-          maxlength="25"
         />
-        <p [ngClass]="msgAlertInput ? 'msg-alert' : 'hidden-msg-alert'">
-          {{ alert.name }}
-        </p>
+        <div class="msg-alert" *ngIf="form.get('name')?.errors && form.get('name')?.touched">
+          Cant't be blank
+        </div>
       </div>
       <div class="box-input">
         <p class="label">card number</p>
         <input
           type="text"
           placeholder="e.g 123 5678 9123 0000"
+          formControlName="number"
           (keyup)="fcDataCard($event, 'number')"
-          maxlength="16"
+          name="firstName"
+          ngModel 
+          pattern="[a-zA-Z]*"
         />
-        <p [ngClass]="msgAlertInput ? 'msg-alert' : 'hidden-msg-alert'">
-          {{ alert.number }}
-        </p>
+        <div class="msg-alert" *ngIf="form.get('number')?.errors && form.get('number')?.touched">
+          Cant't be blank
+        </div>
       </div>
       <div class="box-input box-date">
         <div class="left">
@@ -48,31 +53,34 @@
             <input
               type="number"
               placeholder="MM"
+              formControlName="monthDate"
               (keyup)="fcDataCard($event, 'month')"
-              maxlength="2"
             />
             <input
               type="number"
               placeholder="YY"
+              formControlName="yearDate"
               (keyup)="fcDataCard($event, 'year')"
-              maxlength="2"
             />
           </div>
-          <p [ngClass]="msgAlertInput ? 'msg-alert' : 'hidden-msg-alert'">
-            {{ alert.monthYear }}
-          </p>
+          <div
+            class="msg-alert"
+            *ngIf="form.get('monthDate')?.errors && form.get('monthDate')?.touched || form.get('yearDate')?.errors && form.get('yearDate')?.touched"
+          >
+            Cant't be blank
+          </div>
         </div>
         <div class="right">
           <p class="label">cvc</p>
           <input
             type="number"
             placeholder="e.g 123"
+            formControlName="cvc"
             (keyup)="fcDataCard($event, 'cvc')"
-            maxlength="3"
           />
-          <p [ngClass]="msgAlertInput ? 'msg-alert' : 'hidden-msg-alert'">
-            {{ alert.cvc }}
-          </p>
+          <div class="msg-alert" *ngIf="form.get('cvc')?.errors && form.get('cvc')?.touched">
+            Cant't be blank
+          </div>
         </div>
       </div>
       <div class="box-input">
