@@ -27,7 +27,10 @@
           formControlName="name"
           (keyup)="fcDataCard($event, 'name')"
         />
-        <div class="msg-alert" *ngIf="form.get('name')?.errors && form.get('name')?.touched">
+        <div
+          class="msg-alert"
+          *ngIf="form.get('name')?.errors && form.get('name')?.touched"
+        >
           Cant't be blank
         </div>
       </div>
@@ -35,14 +38,14 @@
         <p class="label">card number</p>
         <input
           type="text"
-          placeholder="e.g 123 5678 9123 0000"
+          placeholder="e.g 1234 5678 9123 0000"
           formControlName="number"
           (keyup)="fcDataCard($event, 'number')"
-          name="firstName"
-          ngModel 
-          pattern="[a-zA-Z]*"
         />
-        <div class="msg-alert" *ngIf="form.get('number')?.errors && form.get('number')?.touched">
+        <div
+          class="msg-alert"
+          *ngIf="form.get('number')?.errors && form.get('number')?.touched"
+        >
           Cant't be blank
         </div>
       </div>
@@ -51,13 +54,13 @@
           <p class="label">exp. date (mm/yy)</p>
           <div>
             <input
-              type="number"
+              type="text"
               placeholder="MM"
               formControlName="monthDate"
               (keyup)="fcDataCard($event, 'month')"
             />
             <input
-              type="number"
+              type="text"
               placeholder="YY"
               formControlName="yearDate"
               (keyup)="fcDataCard($event, 'year')"
@@ -65,7 +68,11 @@
           </div>
           <div
             class="msg-alert"
-            *ngIf="form.get('monthDate')?.errors && form.get('monthDate')?.touched || form.get('yearDate')?.errors && form.get('yearDate')?.touched"
+            *ngIf="
+              (form.get('monthDate')?.errors &&
+                form.get('monthDate')?.touched) ||
+              (form.get('yearDate')?.errors && form.get('yearDate')?.touched)
+            "
           >
             Cant't be blank
           </div>
@@ -73,12 +80,15 @@
         <div class="right">
           <p class="label">cvc</p>
           <input
-            type="number"
+            type="text"
             placeholder="e.g 123"
             formControlName="cvc"
             (keyup)="fcDataCard($event, 'cvc')"
           />
-          <div class="msg-alert" *ngIf="form.get('cvc')?.errors && form.get('cvc')?.touched">
+          <div
+            class="msg-alert"
+            *ngIf="form.get('cvc')?.errors && form.get('cvc')?.touched"
+          >
             Cant't be blank
           </div>
         </div>

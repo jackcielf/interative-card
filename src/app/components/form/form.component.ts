@@ -1,10 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
 import { FormGroup, FormBuilder } from '@angular/forms';
-import { FormControl } from '@angular/forms';
 import { Validators } from '@angular/forms';
-
-import { IsNumberValidator } from 'src/app/IsNumberValidator';
 
 @Component({
   selector: 'app-form',
@@ -38,7 +35,7 @@ export class FormComponent implements OnInit {
     yearDate: '00',
     cvc: '000',
   };
-/*
+  /*
   alertMsg = {
     nameInput: 'Please, enter a valid name',
     nameInputValueInvalid: 'Please, only letters',
@@ -61,34 +58,37 @@ export class FormComponent implements OnInit {
   msgAlertInput: boolean = false;
   */
   // keyCodeNumber: number;
+  // formatNumber(numberValue: string) {
+  //   return numberValue.replace(/^(/d{4})(/d{4})(/d{4})(/d{4})/,
+  //     '$1.$2.$3-$4'
+  //   );
+  // }
 
   fcDataCard(event: any, id: string) {
-    // this.keyCodeNumber = event.keyCode ? event.keyCode : event.which;
-
     switch (id) {
       case 'name':
         this.dataUser.name = (<HTMLInputElement>event.target).value;
-        this.inputValidation(this.dataUser.name, 'name');
+        this.fieldVerify(this.dataUser.name, 'name');
         break;
 
       case 'number':
         this.dataUser.number = (<HTMLInputElement>event.target).value;
-        this.inputValidation(this.dataUser.number, 'number');
+        this.fieldVerify(this.dataUser.number, 'number');
         break;
 
       case 'month':
-        this.dataUser.monthDate = (<HTMLInputElement>event.target).value
-        this.inputValidation(this.dataUser.monthDate.toString(), 'month');
+        this.dataUser.monthDate = (<HTMLInputElement>event.target).value;
+        this.fieldVerify(this.dataUser.monthDate, 'month');
         break;
 
       case 'year':
         this.dataUser.yearDate = (<HTMLInputElement>event.target).value;
-        this.inputValidation(this.dataUser.yearDate.toString(), 'year');
+        this.fieldVerify(this.dataUser.yearDate, 'year');
         break;
 
       case 'cvc':
         this.dataUser.cvc = (<HTMLInputElement>event.target).value;
-        this.inputValidation(this.dataUser.cvc.toString(), 'cvc');
+        this.fieldVerify(this.dataUser.cvc, 'cvc');
         break;
 
       default:
@@ -96,8 +96,29 @@ export class FormComponent implements OnInit {
     }
   }
 
+  fieldVerify(value: any, id: string) {
+    switch (id) {
+      case 'name':
+        !value.length ? (this.dataUser.name = 'nome') : '';
+        break;
 
-  inputValidation(value: any, id: string) {
+      case 'number':
+        !value.length ? (this.dataUser.number = '0000 0000 0000 0000') : '';
+        break;
+
+      case 'month' || 'year':
+        if (!value.length) {
+          this.dataUser.monthDate = '00';
+          this.dataUser.yearDate = '00';
+        }
+        break;
+
+      case 'cvc':
+        !value.length ? (this.dataUser.cvc = '000') : '';
+        break;
+    }
+
+    /*
     if (id == 'name') {
       // Verificando se o input está vazio
       if (!value.length) {
@@ -114,6 +135,7 @@ export class FormComponent implements OnInit {
     if (id == 'month' || id == 'year') {
       if (!value.length) {
         this.dataUser.monthDate = '00';
+        this.dataUser.yearDate = '00';
       }
     }
 
@@ -121,7 +143,6 @@ export class FormComponent implements OnInit {
       if (!value.length) {
         this.dataUser.cvc = '000';
       }
-    }
+    }*/
   }
-  
 }
