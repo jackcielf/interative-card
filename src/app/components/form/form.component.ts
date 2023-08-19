@@ -29,7 +29,7 @@ export class FormComponent implements OnInit {
   }
 
   dataUser = {
-    number: '0000 0000 0000 0000',
+    number: '0000 0000 0000 000',
     name: 'nome',
     monthDate: '00',
     yearDate: '00',
@@ -58,11 +58,75 @@ export class FormComponent implements OnInit {
   msgAlertInput: boolean = false;
   */
   // keyCodeNumber: number;
-  // formatNumber(numberValue: string) {
-  //   return numberValue.replace(/^(/d{4})(/d{4})(/d{4})(/d{4})/,
-  //     '$1.$2.$3-$4'
-  //   );
-  // }
+
+  numberInvalid: boolean = false;
+
+  formatNumber(numberValue: string) {
+    const value = numberValue.charAt(numberValue.length - 1);
+
+    switch (value.toString()) {
+      case '0':
+        console.log('num 0');
+        return (numberValue += '0');
+        break;
+
+      case '1':
+        console.log('num 1');
+        return (numberValue += '1');
+        break;
+
+      case '2':
+        console.log('num 2');
+        return (numberValue += '2');
+        break;
+
+      case '3':
+        console.log('num 3');
+        return (numberValue += '3');
+        break;
+
+      case '4':
+        console.log('num 4');
+        return (numberValue += '4');
+        break;
+
+      case '5':
+        console.log('num 5');
+        return (numberValue += '5');
+        break;
+
+      case '6':
+        console.log('num 6');
+        return (numberValue += '6');
+        break;
+
+      case '7':
+        console.log('num 7');
+        return (numberValue += '7');
+        break;
+
+      case '8':
+        console.log('num 8');
+        return (numberValue += '8');
+        break;
+
+      case '9':
+        console.log('num 9');
+        return (numberValue += '9');
+        break;
+
+      default:
+        this.numberInvalid = true;
+        return '';
+        break;
+    }
+    // }
+    // if () {
+
+    // }
+    console.log('nao caiu na condicao');
+    // return numberValue;
+  }
 
   fcDataCard(event: any, id: string) {
     switch (id) {
@@ -103,7 +167,8 @@ export class FormComponent implements OnInit {
         break;
 
       case 'number':
-        !value.length ? (this.dataUser.number = '0000 0000 0000 0000') : '';
+        !value.length ? (this.dataUser.number = '0000 0000 0000 000') : '';
+        this.numberInvalid = false;
         break;
 
       case 'month' || 'year':

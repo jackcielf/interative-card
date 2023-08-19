@@ -3,7 +3,7 @@
     <div class="box-card-front">
       <img class="cardLogo" [src]="cardLogo" alt="logo" />
       <div class="box-data">
-        <p>{{ dataUser.number }}</p>
+        <p>{{ formatNumber(dataUser.number) }}</p>
         <div class="align-data">
           <span class="spanName">{{ dataUser.name }}</span>
           <span>{{ dataUser.monthDate }}/{{ dataUser.yearDate }}</span>
@@ -41,6 +41,7 @@
           placeholder="e.g 1234 5678 9123 0000"
           formControlName="number"
           (keyup)="fcDataCard($event, 'number')"
+          maxlength="16"
         />
         <div
           class="msg-alert"
@@ -48,6 +49,12 @@
         >
           Cant't be blank
         </div>
+        <div class="msg-alert" *ngIf="numberInvalid">
+          Wrong format, numbers only
+        </div>
+        <!-- <div class="msg-alert" *ngIf="numberInvalid">
+          This field must have 16 numbers
+        </div> -->
       </div>
       <div class="box-input box-date">
         <div class="left">
