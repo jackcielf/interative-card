@@ -18,91 +18,141 @@
   <section></section>
 
   <section class="form-right">
-    <form [formGroup]="form">
+    <form [formGroup]="form" (ngSubmit)="submeterForm()">
       <div class="box-input">
-        <p class="label">cardholder name</p>
+        <label for="name" class="label">cardholder name</label>
         <input
+          id="name"
           type="text"
           placeholder="e.g Jane Appleseed"
           formControlName="name"
           (keyup)="fcDataCard($event, 'name')"
+          minlength="15"
+          maxlength="25"
         />
-        <div
+        <div class="msg-alert" *ngIf="fnName.errors">
+          <p *ngIf="fnName.errors.required && fnName.touched">
+            Cant't be blank
+          </p>
+          <p *ngIf="fnName.errors.minlength">15 characters minimum</p>
+          <p *ngIf="fnName.errors.maxlength">25 characters maximum</p>
+        </div>
+        <!-- <div
           class="msg-alert"
           *ngIf="form.get('name')?.errors && form.get('name')?.touched"
         >
           Cant't be blank
-        </div>
+        </div> -->
       </div>
       <div class="box-input">
-        <p class="label">card number</p>
+        <label for="number" class="label">card number</label>
         <input
+          id="number"
           type="text"
           placeholder="e.g 1234 5678 9123 0000"
           formControlName="number"
           (keyup)="fcDataCard($event, 'number')"
+          minlength="16"
           maxlength="16"
         />
-        <div
+        <!-- <div
           class="msg-alert"
-          *ngIf="form.get('number')?.errors && form.get('number')?.touched"
+          *ngIf="!fnCardNumber.pristine && fnCardNumber.errors"
         >
-          Cant't be blank
+          <p
+            *ngIf="fnCardNumber.errors.required && fnCardNumber.errors?.touched"
+          >
+            Cant't be blank
+          </p>
+          <!-- <p *ngIf="fnCardNumber.errors.numInvalid">numero invalido</p> -->
+        <!-- <p *ngIf="this.alert.numberInvalid">Wrong format, numbers only</p> -->
+
+        <!-- <p *ngIf="number.errors.minlength || number.errors.maxlength">
+            this field needs to have 16 numbers
+          </p>
+          <p *ngIf="number.errors.maxlength">16 characters maximum</p> -->
+        <!-- </div> -->
+        <div class="msg-alert">
+          <p *ngIf="fnCardNumber.errors && fnCardNumber.touched">
+            Cant't be blank
+          </p>
+          <p *ngIf="fnCardNumber.errors?.minlength && fnCardNumber?.touched">
+            This field needs to have 16 numbers
+          </p>
+          <p *ngIf="this.alert.numberInvalid">Wrong format, numbers only</p>
         </div>
-        <div class="msg-alert" *ngIf="numberInvalid">
-          Wrong format, numbers only
-        </div>
+
+        <!-- <div *ngIf="form.errors?.['maxlength']">
+          At least 16 characters minimum.
+        </div> -->
         <!-- <div class="msg-alert" *ngIf="numberInvalid">
           This field must have 16 numbers
         </div> -->
       </div>
       <div class="box-input box-date">
         <div class="left">
-          <p class="label">exp. date (mm/yy)</p>
+          <label for="month" class="label">exp. date (mm/yy)</label>
           <div>
             <input
+              id="month"
               type="text"
               placeholder="MM"
               formControlName="monthDate"
               (keyup)="fcDataCard($event, 'month')"
+              minlength="2"
+              maxlength="2"
             />
             <input
               type="text"
               placeholder="YY"
               formControlName="yearDate"
               (keyup)="fcDataCard($event, 'year')"
+              minlength="2"
+              maxlength="2"
             />
           </div>
-          <div
-            class="msg-alert"
-            *ngIf="
-              (form.get('monthDate')?.errors &&
-                form.get('monthDate')?.touched) ||
-              (form.get('yearDate')?.errors && form.get('yearDate')?.touched)
-            "
-          >
-            Cant't be blank
+          <div class="msg-alert">
+            <p
+              *ngIf="
+                (fnMonthDate.errors && fnMonthDate.touched) ||
+                (fnYearDate.errors && fnYearDate.touched)
+              "
+            >
+              Cant't be blankf
+            </p>
+            <!-- <p *ngIf="this.alert.monthYearInvalid">Cant't be blank</p> -->
           </div>
         </div>
         <div class="right">
-          <p class="label">cvc</p>
+          <label for="cvc" class="label">cvc</label>
           <input
+            id="cvc"
             type="text"
             placeholder="e.g 123"
             formControlName="cvc"
             (keyup)="fcDataCard($event, 'cvc')"
+            minlength="3"
+            maxlength="3"
           />
-          <div
-            class="msg-alert"
-            *ngIf="form.get('cvc')?.errors && form.get('cvc')?.touched"
-          >
-            Cant't be blank
+          <div class="msg-alert">
+            <p *ngIf="fnCvc.errors && fnCvc.touched">Cant't be blank</p>
           </div>
         </div>
       </div>
       <div class="box-input">
-        <input type="button" value="Confirm" />
+        <button
+          [disabled]="!form.valid"
+          [ngClass]="!form.valid ? 'noValidForm' : ''"
+          type="submit"
+        >
+          Confirm
+        </button>
       </div>
     </form>
   </section>
+  <div>{{ form.value | json }}</div>
+  <div>{{ form.valid | json }}</div>
 </main>
+<!-- 
+  LINKS: https://medium.com/manacespereira/angular-ractiveforms-valida%C3%A7%C3%B5es-customizadas-com-formul%C3%A1rios-reativos-no-angular-6-3a3338f9add9 
+-->

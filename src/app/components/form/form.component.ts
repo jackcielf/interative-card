@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { Validators } from '@angular/forms';
+import { UserData } from 'src/app/UserData';
 
 @Component({
   selector: 'app-form',
@@ -16,18 +17,6 @@ export class FormComponent implements OnInit {
 
   form: FormGroup;
 
-  constructor(private formBuilder: FormBuilder) {}
-
-  ngOnInit(): void {
-    this.form = this.formBuilder.group({
-      name: ['', [Validators.required, Validators.minLength(2)]],
-      number: ['', [Validators.required, Validators.maxLength(16)]],
-      monthDate: ['', [Validators.required, Validators.maxLength(2)]],
-      yearDate: ['', [Validators.required, Validators.maxLength(2)]],
-      cvc: ['', [Validators.required, Validators.maxLength(3)]],
-    });
-  }
-
   dataUser = {
     number: '0000 0000 0000 000',
     name: 'nome',
@@ -35,8 +24,82 @@ export class FormComponent implements OnInit {
     yearDate: '00',
     cvc: '000',
   };
+
+  alert = {
+    numberInvalid: false,
+    // monthYearInvalid: false,
+  };
+
+  constructor(private formBuilder: FormBuilder) {}
+
+  ngOnInit(): void {
+    this.form = this.formBuilder.group({
+      name: [
+        '',
+        [
+          Validators.compose([Validators.required]),
+          Validators.minLength(15),
+          Validators.maxLength(40),
+        ],
+      ],
+      number: [
+        '',
+        [
+          Validators.compose([Validators.required]),
+          Validators.minLength(16),
+          Validators.maxLength(16),
+        ],
+      ],
+      monthDate: [
+        '',
+        [
+          Validators.compose([Validators.required]),
+          Validators.minLength(2),
+          Validators.maxLength(2),
+        ],
+      ],
+      yearDate: [
+        '',
+        [
+          Validators.compose([Validators.required]),
+          Validators.minLength(2),
+          Validators.maxLength(2),
+        ],
+      ],
+      cvc: [
+        '',
+        [
+          Validators.compose([Validators.required]),
+          Validators.minLength(3),
+          Validators.maxLength(3),
+        ],
+      ],
+    });
+  }
+
+  // Propriedades do formulário que vamos utilizar para obter os erros
+  get fnName() {
+    return this.form.get('name');
+  }
+
+  get fnCardNumber() {
+    return this.form.get('number');
+  }
+
+  get fnMonthDate() {
+    return this.form.get('monthDate');
+  }
+
+  get fnYearDate() {
+    return this.form.get('yearDate');
+  }
+
+  get fnCvc() {
+    return this.form.get('cvc');
+  }
+
   /*
-  alertMsg = {
+  alert = {
     nameInput: 'Please, enter a valid name',
     nameInputValueInvalid: 'Please, only letters',
     numberInput: 'Wrong format, numbers only',
@@ -58,8 +121,6 @@ export class FormComponent implements OnInit {
   msgAlertInput: boolean = false;
   */
   // keyCodeNumber: number;
-
-  numberInvalid: boolean = false;
 
   formatNumber(numberValue: string) {
     const value = numberValue.charAt(numberValue.length - 1);
@@ -116,7 +177,7 @@ export class FormComponent implements OnInit {
         break;
 
       default:
-        this.numberInvalid = true;
+        this.alert.numberInvalid = true;
         return '';
         break;
     }
@@ -124,7 +185,7 @@ export class FormComponent implements OnInit {
     // if () {
 
     // }
-    console.log('nao caiu na condicao');
+    // console.log('nao caiu na condicao');
     // return numberValue;
   }
 
@@ -168,7 +229,7 @@ export class FormComponent implements OnInit {
 
       case 'number':
         !value.length ? (this.dataUser.number = '0000 0000 0000 000') : '';
-        this.numberInvalid = false;
+        this.alert.numberInvalid = false;
         break;
 
       case 'month' || 'year':
@@ -176,14 +237,52 @@ export class FormComponent implements OnInit {
           this.dataUser.monthDate = '00';
           this.dataUser.yearDate = '00';
         }
+
+        const date = new Date();
+        const dateToString = date.getFullYear().toString();
+        const yearCurrent = dateToString.slice(dateToString.length - 2);
+
+        // if (
+        //   Number(this.dataUser.monthDate) >= 12 ||
+        //   Number(this.dataUser.yearDate) !== Number(yearCurrent)
+        // ) {
+        //   this.alert.monthYearInvalid = true;
+        //   console.log(
+        //     `${
+        //       this.dataUser.monthDate
+        //     }/${this.dataUser.yearDate.toString()}/${yearCurrent}`
+        //   );
+        // }
         break;
 
       case 'cvc':
         !value.length ? (this.dataUser.cvc = '000') : '';
         break;
     }
+  }
 
-    /*
+  submeterForm() {
+    const dataForm = this.form.value;
+    // console.log('Dados: ', dataForm);
+
+    const userData = new UserData(
+      dataForm.name,
+      dataForm.cardNumber,
+      dataForm.dateMonth,
+      dataForm.dateYear,
+      dataForm.cvc
+    );
+
+    alert(
+      `Os dados de ${
+        userData.name
+      } foram cadastrados com sucesso. \n Dados: ${JSON.stringify(userData)}`
+    );
+
+    this.form.reset();
+  }
+
+  /*
     if (id == 'name') {
       // Verificando se o input está vazio
       if (!value.length) {
@@ -209,5 +308,4 @@ export class FormComponent implements OnInit {
         this.dataUser.cvc = '000';
       }
     }*/
-  }
 }

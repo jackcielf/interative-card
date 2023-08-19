@@ -26,7 +26,8 @@
   justify-content: space-between;
 }
 
-.box-input input {
+.box-input input,
+.box-input button {
   width: 100%;
   padding: 12px;
   border-radius: 8px;
@@ -57,11 +58,16 @@
   gap: 10px;
 }
 
-.box-input input[type="button"] {
+.box-input button {
   background-color: var(--veryDark);
   border: none;
   padding: 15px 23px;
   color: var(--white);
+}
+
+.noValidForm {
+  background-color: var(--veryDark);
+  opacity: 0.5;
 }
 
 .box-card-front,
@@ -142,7 +148,7 @@
 .msg-alert {
   display: block;
   color: var(--red);
-  font-size: .8em;
+  font-size: 0.8em;
   margin-top: 5px;
   font-weight: 500;
 }
